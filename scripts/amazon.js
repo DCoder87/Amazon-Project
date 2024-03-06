@@ -45,12 +45,45 @@ products.forEach((product) => {
             <img src="images/icons/checkmark.png">
             Added
           </div>
-
-          <button class="add-to-cart-button button-primary">
+          
+          <button class="add-to-cart-button button-primary js-add-to-cart"
+          data-product-id= "${product.id}">
             Add to Cart
           </button>
         </div>`;
 }) 
+// data-product-name is an data attribute
 console.log(productsHTML); // combining the html code for the multiple products
 
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
+
+document.querySelectorAll('.js-add-to-cart').forEach((button) =>{
+  button.addEventListener('click', () => {
+     const productId = button.dataset.productId;
+
+  let matchingItem;
+
+    cart.forEach((item) => {
+      if(productId === item.productId)
+      {
+        matchingItem = item;
+      }
+    });
+
+      if(matchingItem)
+      {
+        matchingItem.quantity +=1;
+      }
+
+      else
+      {
+        cart.push({
+          productId: productId,
+          quantity: 1
+         });
+      }
+     console.log(cart);
+  }); 
+  // dataset will give us all the data attribute associated with the button.
+  // in place of id we can use productName but as two different product can have same name thats why unique id is preferred.
+});
