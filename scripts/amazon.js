@@ -1,3 +1,5 @@
+import { cart } from "../data/cart.js";
+
 let productsHTML = "";
 // products variable will be coming from data/products.js
 products.forEach((product) => {
