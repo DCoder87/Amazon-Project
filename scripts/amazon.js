@@ -1,5 +1,4 @@
-
-let productsHTML = '';
+let productsHTML = "";
 // products variable will be coming from data/products.js
 products.forEach((product) => {
   productsHTML += `
@@ -21,7 +20,7 @@ products.forEach((product) => {
             </div>
           </div>
           <div class="product-price">
-            ${(product.priceCents/100).toFixed(2)} 
+            ${(product.priceCents / 100).toFixed(2)} 
           </div>
 
           <div class="product-quantity-container">
@@ -51,39 +50,41 @@ products.forEach((product) => {
             Add to Cart
           </button>
         </div>`;
-}) 
+});
 // data-product-name is an data attribute
 console.log(productsHTML); // combining the html code for the multiple products
 
-document.querySelector('.js-products-grid').innerHTML = productsHTML;
+document.querySelector(".js-products-grid").innerHTML = productsHTML;
 
-document.querySelectorAll('.js-add-to-cart').forEach((button) =>{
-  button.addEventListener('click', () => {
-     const productId = button.dataset.productId;
+document.querySelectorAll(".js-add-to-cart").forEach((button) => {
+  button.addEventListener("click", () => {
+    const productId = button.dataset.productId;
 
-  let matchingItem;
+    let matchingItem;
 
     cart.forEach((item) => {
-      if(productId === item.productId)
-      {
+      if (productId === item.productId) {
         matchingItem = item;
       }
     });
 
-      if(matchingItem)
-      {
-        matchingItem.quantity +=1;
-      }
+    if (matchingItem) {
+      matchingItem.quantity += 1;
+    } else {
+      cart.push({
+        productId: productId,
+        quantity: 1,
+      });
+    }
 
-      else
-      {
-        cart.push({
-          productId: productId,
-          quantity: 1
-         });
-      }
-     console.log(cart);
-  }); 
+    let cartQuantity = 0;
+
+    cart.forEach((item) => {
+      cartQuantity += item.quantity;
+    });
+
+    document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
+  });
   // dataset will give us all the data attribute associated with the button.
   // in place of id we can use productName but as two different product can have same name thats why unique id is preferred.
 });
